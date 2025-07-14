@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    curl wttr.in
+else
+    parsed_loc=""
+    for arg in "$@"; do
+        parsed_arg=$(echo "$arg" | sed 's/ /%20/g')
+        if [ -z "$parsed_loc" ]; then
+            parsed_loc="$parsed_arg"
+        else
+            parsed_loc="${parsed_loc}%20$parsed_arg"
+        fi
+    done
+    curl "wttr.in/$parsed_loc"
+fi
